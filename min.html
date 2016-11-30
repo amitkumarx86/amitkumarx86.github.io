@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>minimum-sub-array-with-1-to-k-numbers-in-java</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Theme CSS -->
+    <link href="css/clean-blog.min.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="css/dracula.css">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    Menu <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand" href="index.html">Ampus</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="index.html">Home</a>
+                    </li>
+                    <li>
+                        <a href="about.html">About</a>
+                    </li>
+                    <li>
+                        <a href="contact.html">Contact</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header class="intro-header" style="background-image: url('img/Everyday-Be-Coding.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <h1>Minimum Sub Array with 1-k numbers in java</h1>
+                        <h2 class="subheading">Coding bits!</h2>
+                        <span class="meta">Posted by <a href="#">Ampus</a> on September 24, 2016</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Post Content -->
+    <article>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <p>Suppose we have one array:
+                        4, 5, 6, 7, 1, 2,1,, 4, 5, 3, 6, 7, 10, 1, 2, 3, 4
+                        And k=4, <br>
+                        that means we have to find the sub array which has all the elements 1, 2, 3, 4
+                        and the array length should be minimum.</p>
+
+                    <p>
+                        <h3>Intuition:</h3>
+                         First we will just find the index till where we can get all the numbers then we will proceed to minimize the size of the sub-array.
+                         <br>So as we can see till index 9 we can get all the desired numbers. Then we will try to minimize this length. And by minimizing means we can get another sub array which is minimum as in this case which is: 1,2,3,4 at last in the array.
+                         <br>So we go ahead using this method we can get the minimum sub array having 1 to k numbers.</p>
+
+<h2>Code in Java</h2>
+<pre>
+    <code class="java">
+            public class NumbersfromOnetoK {
+                public static void main(String[] args) {
+                    NumbersfromOnetoK m = new NumbersfromOnetoK();
+                    int[] arr={4, 5, 6, 1, 7, 1, 2, 4, 5, 3, 6, 7, 10, 1, 2, 3, 4}; 
+                    int k=4;
+                    m.findSubArrayWith_1_to_K_Numbers();
+                }
+
+
+                private void findSubArrayWith_1_to_K_Numbers(int[] arr, int k){
+                     int strtInd=0,endInd=0,digCount=0;
+                     int[] kArr=new int[k+1];
+                            /*
+                      * First find the sub array in which 1 to k number exist, it may 
+                      * not be the minimal
+                      * */
+                     for(int i=0;i<arr.length;i++){  
+                         if(arr[i] <=k && arr[i] >=1){
+                            // count of digits from 1...k
+                            if(kArr[arr[i]]==0) digCount++;    
+                            kArr[arr[i]]++;
+                            if(digCount == k) {endInd=i;break;}
+                         }
+                     }  
+                                 
+                    int min_len=endInd-strtInd+1; // initially we let this is min 
+                    int tempInd=endInd;
+                    int i=strtInd;
+             
+                    while(tempInd &lt;arr.length){
+                         if(arr[i] &le; k){
+                            kArr[arr[i]]--;
+                            if(kArr[arr[i]] == 0){
+                                kArr[arr[i]]++; // retain digits's count
+
+                                // calculating new minimum
+                                if(tempInd-i+1 < min_len){
+                                    min_len=tempInd-i+1;
+                                    strtInd=i;endInd=tempInd;
+                                }
+                                        
+                                // increase tempInd when it is under array length
+                                if(tempInd < arr.length)
+                                    tempInd++;
+
+                                // skipping nos which are not in range 1..k
+                                while(tempInd < arr.length && arr[tempInd] > k)tempInd++;
+                                // if no is in 1..k then increment its count in kArray
+                                if(tempInd < arr.length)
+                                   kArr[arr[tempInd]]++;
+                            }
+                            else
+                                i++; // increase i when the dig count in not reduced
+                        }
+                        else
+                            i++; // increase i if no is out of range 1..k
+                 
+                    }
+                    //print start and end index of sub array
+                    System.out.println(strtInd+" "+endInd+" len="+min_len); // final answer
+                }
+            }
+    </code>
+</pre>              
+                    <p>
+                    Time Complexity : O(n) <br>
+                    Space Complexity : O(k) 
+                    </p>
+                    
+                    <p>
+                        Logic: The whole logic includes below points:
+
+                    <h3>Phase 1:</h3>
+                    <ol>
+                        <li>
+                            make an array of size k+1 to store count of numbers from 1..k , skipping index 0 as we are not including 0 Array name in code is : kArr 
+                        </li>
+                        <li>Run the loop and increase count as : kArr[arr[i]]++; </li>
+                        <li>Also unique digits(under 1..k) count using digCount </li>
+                        <li>When diCount becomes k then stop the loop. </li>
+                    </ol>
+                    
+                    <h3>Phase 2:</h3>
+                    <ol>
+                        <li>Assign the below values to variables: tempInd = end index where we have stopped the loop min_len = endInd - strtind +1 ; i = strtInd; </li>
+                        <li>Run a while loop till the end of array in search of minimum length of sub-array containing 1..k</li>
+                        <li>Treat the sub-array which we got from phase 1 as window. </li>
+                        <li>Now we will try to decrease window from left as in our case after phase 1 we have kArray as (digit - count): endInd = 9, strtInd = 0, min_len = 11 1 - 2, 2 - 1, 3 - 1, 4 - 2 </li>
+                        <li>When we try to reduce the window, we have 4 on left so reducing the count is not making the count of 4 as 0 in kArray so that means we can reduce the window. kArray : 1 - 2, 2 - 1, 3 - 1, 4 - 1 and index i = 4 </li>
+                        <li>Now we will increment i=1 from i=0; </li>
+                        <li>We again try to decrease window from left, we get 5 which is not our number, index i = 2 </li>
+                        <li>We got 6 which is again not our number(in range 1..k) and index i = 3 </li>
+                        <li>We got 1, can we reduce it ? Yes as we have count = 2 for 1 The kArray : 1 - 1, 2 - 1, 3 - 1, 4 - 1 and index i = 4 </li>
+                        <li>Again we try to reduce, at i = 4 we have 7 so just increment i at i = 5 we have 1, but when we try to reduce the count in kArray will become 0 for 1 </li>
+                        <li>That means we cannot reduce from left now.</li>
+                        <li>So we will increase the window from right And we will accommodate new numbers(in 1..k) in search of minimum sub-array </li>
+                        <li>Update minimum length if possible </li>
+                        <li>In this case we have skipped number 6, 7, 10 as they are out of range. </li>
+                        <li>And tempInd increased to 13 and we got 1 so we incremented count of 1 from 1 to 2The kArray : 1 - 2, 2 - 1, 3 - 1, 4 - 1 </li>
+                        <li>And again we will try to decrease window from left </li>
+                        <li>Means we can as i = 5 is 1 and we can decrease count of 1 to 1 from 2, index i = 6 </li>
+                        <li>Now again try to decrease window from left, i = 6 is 2 The kArray : 1 - 1, 2 - 1, 3 - 1, 4 - 1 and index i = 6 </li>
+                        <li>Count in kArray for 2 will become 0, so we will update min_len </li>
+                        <li>And then increase window to right </li>
+                        <li>We got 2 at tempInd = 14 and increase count of 2 in kArray: The kArray : 1 - 1, 2 - 2, 3 - 1, 4 - 1 and index i = 6, tempInd = 14 </li>
+                        <li>Now we can decrease window form left so : The kArray : 1 - 1, 2 - 1, 3 - 1, 4 - 1 and index i = 7 </li>
+                        <li>@Index i = 7, we have 4, when we try to decrease window from left count of 4 will become 0 so we will try to increase window from right</li>
+                        <li>Update min_len, increment tempInd to 15 and we get number 3, The kArray : 1 - 1, 2 - 1, 3 - 2, 4 - 1 and index i = 7 </li>
+                        <li>We can't decrease window from left as same problem described in point 25 </li>
+                        <li>Update min_len, increment tempInd to 16 and we get number 4 The kArray : 1 - 1, 2 - 1, 3 - 2, 4 - 2 and index i = 7 </li>
+                        <li>Now we can reduce array from left and index i = 8 The kArray : 1 - 1, 2 - 1, 3 - 2, 4 - 1 and index i = 8 </li>
+                        <li>Again try to reduce from left: YES we can The kArray : 1 - 1, 2 - 1, 3 - 1, 4 - 1 and index i = 9</li>
+                        <li>And i will get incremented to 12 as numbers are out of range. </li>
+                        <li>Now when we will try to decrease window from left which we cannot </li>
+                        <li>Update minimum length which is min_len= tempInd - i +1 = 16 - 13 + 1 = 4 </li>
+                        <li>We increase tempInd but tempInd will become 17 which is > arr.length </li>
+                        <li>We come out of the while loop, print the strtInd and endInd updated during the process and length of the sub-array. 
+
+                        </li>
+                    </ol>
+                    </p>
+                    
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <hr>
+
+    <!-- Footer -->
+     
+    <footer>
+        <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    <li>
+                        <a href="https://twitter.com/amitkumarx86">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.facebook.com/amitkumarx86">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/amitkumarx86/">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+                <p class="copyright text-muted">Copyright &copy; Your Website 2016</p>
+            </div>
+        </div>
+    </div>
+
+    </footer>
+
+    <!-- jQuery -->
+    <script src="jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Contact Form JavaScript -->
+    <script src="js/jqBootstrapValidation.js"></script>
+    <script src="js/contact_me.js"></script>
+
+    <!-- Theme JavaScript -->
+    <script src="js/clean-blog.min.js"></script>
+    
+    <script src="js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+     
+
+</body>
+
+</html>
