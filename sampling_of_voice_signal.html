@@ -93,7 +93,7 @@
                          		When converting an voice (analog) signal , there are two things to focus: sampling and quantization. Together, they determine the quality of the digitized sound.
                          	</p>
 						<p>
-						<h4>Sampling</h4> : is about the sampling rate — i.e. how many samples per second you use to encode the sound. The sampling rate must be double the highest frequency in the signal so that signal neither appears choopy not too smooth.
+						<h4>Sampling</h4> : is about the sampling rate — i.e. how many samples per second you use to encode the sound. The sampling rate must be double the highest frequency in the signal so that signal neither appears choppy not too smooth.
 						<h4>Quantization</h4> : is about how many bits you use to represent each sample. The number of bits determines the number of different values you can represent with each sample.<br>
                       	</p>
                       	<hr>	   
@@ -102,6 +102,7 @@
 						Digital signal technology is based on the premise stated in the Nyquist Theorem: <i>when a signal is instantaneously sampled at the transmitter in regular intervals and has a rate of at least twice the highest channel frequency, then the samples will contain sufficient information to allow an accurate reconstruction of the signal at the receiver</i>
 						<br>
 						<img src="img/nyquist_theorem.png" alt="nyquist_theorem"/>
+						<i>PC: Cisco</i>
 						</p>
 						
 						<h5>Example: Nyquist Theorem</h5>
@@ -112,8 +113,9 @@
 						</p>
 
 						<p>
-							Several people have experienced that voice over phone is not exactly similer. This happens because the quantisation used is not precise enough. 
+							Several people have experienced that voice over phone is not exactly similar to their own voice. If we increase sampling rate and number of bits for quantization( that means also increasing number of levels), then the similarity in the voice will improve.
 							<br>
+							In other words we can say that we will send more information over the voice channel.
 
 						</p>
                    
