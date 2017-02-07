@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>knn over images</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Theme CSS -->
+    <link href="css/clean-blog.min.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="css/dracula.css">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    Menu <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand" href="index.html">Ampus</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="index.html">Home</a>
+                    </li>
+                    <li>
+                        <a href="about.html">About</a>
+                    </li>
+                    <li>
+                        <a href="contact.html">Contact</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header class="intro-header" style="background-image: url('img/Everyday-Be-Coding.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <h1>knn over Images</h1>
+                        <h2 class="subheading">Coding bits!</h2>
+                        <span class="meta">Posted by <a href="#">Ampus</a> on February 8, 2017</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Post Content -->
+    <article>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <p>In this blog we will be applying knn(k-nearest neighbor) to classify cats and dogs images.
+                       We have taken dataset from <a href="https://www.kaggle.com/c/dogs-vs-cats-redux-kernels-edition/data">Kaggle</a>.
+                       There are ~25k images of cats and dogs in the dataset.</p>
+
+
+                    <p>
+                        <h3>Approach:</h3>
+                         <ul>
+                            <li>We have taken color histogram as feature vector.</li>
+                            <li>Then we have taken images from train folder and trained the knn</li>
+                            <li>To test the model we have taken images from test folder</li>
+                            <li>Model is giving accuracy of 57%</li>
+                        </ul>
+                    </p>
+                    <p>
+                        <h3>What do we need to run knn?</h3>
+                        Please read this <a href="http://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_ml/py_knn/py_knn_understanding/py_knn_understanding.html#knn-understanding">article</a> before jumping the code below.
+                        We have taken the labels as :<br>
+                        1 for cat and 0 for dog<br>
+                        Cause knn only takes integer as input for labels.<br>
+                        <h4>How we taken the label from the images ?</h4>
+                        Using below command we have got the labels:<br>
+                        <i>imgPath.split(".")[0]</i>
+                    </p>
+                    <p>
+                        <h3>How to check accuracy of the model</h3>
+                        We have used below method to calculate the accuracy:<br>
+                        <i>accuracy = len([i for i,j in zip(results.tolist(),test_labels) if i==j])*100.0/results.size</i>
+                        <br>
+                        That is number of matches between results and test_labels, divided by results.size and scaled to 100 to get the percentage.
+                    </p>
+
+<h2>Code in Python</h2>
+<pre>
+    <code class="python">
+            import numpy as np
+            import cv2
+            from matplotlib import pyplot as plt
+            import sys
+            import os
+
+            lables=[]
+            features=[]
+
+            def extract_feature(img):
+                img = cv2.cvtColor(img,cv2.COLOR_BGR2HSV)
+                hist=cv2.calcHist([img],[0,1,2],None,[8,8,8],[0, 180, 0, 256, 0, 256])
+                hist=cv2.normalize(hist)
+                return hist.flatten()
+
+            def knnOverImages(trainPath,testPath):                
+                for imgPath in [ f for f in os.listdir(trainPath) if f.endswith(".jpg")]:
+                    img=cv2.imread(trainPath+"/"+imgPath)
+                    features.append(extract_feature(img))
+                    if imgPath.split(".")[0] == "cat":
+                        lables.append(1)
+                    else:
+                        lables.append(0)
+
+                features1=np.array(features)
+                lables1 = np.array(lables)
+                
+                # model knn
+                knn=cv2.KNearest()
+                knn.train(features1,lables1)
+                
+                # test knn               
+                testData=[]
+                test_labels=[]
+
+                for imgPath in [ f for f in os.listdir(testPath) if f.endswith(".jpg")]:
+                    if imgPath.split(".")[0] == "cat":
+                        test_labels.append(0)
+                    else:
+                        test_labels.append(1)
+                    
+                    testData.append(extract_feature(cv2.imread(testPath+"/"+imgPath)))
+
+                testData=np.array(testData)
+                test_labels=np.array(test_labels)
+                ret, results, neighbours, dst = knn.find_nearest(testData,9)
+                
+                # Now we check the accuracy of classification
+                # For that, compare the result with test_labels and check which are wrong
+                accuracy = len([i for i,j in zip(results.tolist(),test_labels) if i==j])*100.0/results.size
+                print accuracy
+
+            if __name__=="__main__":    
+                # get path where train and test images are present
+                trainPath=sys.argv[1] # path where test images are present
+                testPath =sys.argv[2] # path where train images are present
+                knnOverImages(trainPath,testPath)
+                
+
+    </code>
+</pre>              
+                   
+            </div>
+        </div>
+    </article>
+
+    <hr>
+
+    <!-- Footer -->
+     
+    <footer>
+        <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    <li>
+                        <a href="https://twitter.com/amitkumarx86">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.facebook.com/amitkumarx86">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/amitkumarx86/">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+                <p class="copyright text-muted">Copyright &copy; Your Website 2016</p>
+            </div>
+        </div>
+    </div>
+
+    </footer>
+
+    <!-- jQuery -->
+    <script src="jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Contact Form JavaScript -->
+    <script src="js/jqBootstrapValidation.js"></script>
+    <script src="js/contact_me.js"></script>
+
+    <!-- Theme JavaScript -->
+    <script src="js/clean-blog.min.js"></script>
+    
+    <script src="js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+     
+
+</body>
+
+</html>
