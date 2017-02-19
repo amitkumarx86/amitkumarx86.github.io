@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Ampus</title>
+    <title>OpenCV Image Processing Examples</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -21,6 +21,8 @@
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?lang=css&skin=desert"></script> 
+    <link rel="stylesheet" href="css/dracula.css">
     <link rel="shortcut icon" type="imgx-icon" href="img/favicon.ico" />
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -42,7 +44,7 @@
                     <span class="sr-only">Toggle navigation</span>
                     Menu <i class="fa fa-bars"></i>
                 </button>
-                <!-- <a class="navbar-brand" href="index.html">Home</a> -->
+                <a class="navbar-brand" href="index.html" style="font-size: xx-large;">Ampus</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -54,11 +56,6 @@
                     <li>
                         <a href="about.html">About</a>
                     </li>
-                    <!--
-                    <li>
-                        <a href="post.html">Posts</a>
-                    </li>
-                    -->
                     <li>
                         <a href="contact.html">Contact</a>
                     </li>
@@ -71,87 +68,58 @@
 
     <!-- Page Header -->
     <!-- Set your background image for this header on the line below. -->
-    <header class="intro-header" style="background-image: url('img/home-bg.jpg')">
+    <header class="intro-header" style="background-image: url('img/2.png')">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                    <div class="site-heading">
-                        <h1>Ampus</h1>
-                        <hr class="small">
-                        <span class="subheading">A Blog by : Amit Kumar</span>
+                    <div class="post-heading">
+                        <h1>OpenCV Image Processor</h1>
+                        <h2 class="subheading">Coding bits!</h2>
+                        <span class="meta">Posted by <a href="#">Ampus</a> on February 20, 2017</span>
                     </div>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- Main Content -->
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="post-preview">
-                    <a href="openImageProcessing.html">
-                        <h2 class="post-title">
-                            Image Processor Using OpenCV
-                        </h2>
-                        <h3 class="post-subtitle">
-                            Software to see what happens if you apply various opencv functions on Image on the go. 
-                        </h3>
-                    </a>
-                    <p class="post-meta">Posted by <a href="#">Ampus</a> on February 20, 2017</p>
-                </div>
-                <div class="post-preview">
-                    <a href="knnOverImages.html">
-                        <h2 class="post-title">
-                            Knn over Images of Cats and Dogs
-                        </h2>
-                        <h3 class="post-subtitle">
-                            We have selected Kaggle dataset of cats and dogs and applied knn to classify them.
-                        </h3>
-                    </a>
-                    <p class="post-meta">Posted by <a href="#">Ampus</a> on February 8, 2017</p>
-                </div>
-                <div class="post-preview">
-                    <a href="min_subarr_with_1_to_k_nums.html">
-                        <h2 class="post-title">
-                            Find minimum sub-array which has 1 to k numbers
-                        </h2>
-                        <h3 class="post-subtitle">
-                            Suppose we have one array:
-                            <br>4, 5, 6, 7, 1, 2,1,, 4, 5, 3, 6, 7, 10, 1, 2, 3, 4
-                            And k=4, that means we have to find the sub array which has all the elements 1, 2, 3, 4
-                            and the array length should be minimum.
-                        </h3>
-                    </a>
-                    <p class="post-meta">Posted by <a href="#">Ampus</a> on November 24, 2016</p>
-                </div>
-                 <div class="post-preview">
-                    <a href="sampling_of_voice_signal.html">
-                        <h2 class="post-title">
-                            Voice : Its Sampling and Converting it into Digital Signal
-                        </h2>
-                        <h3 class="post-subtitle">
-                            While the human ear can sense sounds from 20 to 20,000 Hz, and speech encompasses sounds from about 200 to 9000 Hz,the telephone channel was designed to operate at about 300 to 3400 Hz.
-                        </h3>
-                    </a>
-                    <p class="post-meta">Posted by <a href="#">Ampus</a> on January 17, 2017</p>
-                </div>
-                
-                <hr>
-                                
-                <!-- Pager -->
-                <ul class="pager">
-                    <li class="next">
-                        <a href="#">Older Posts &rarr;</a>
-                    </li>
-                </ul>
+    <!-- Post Content -->
+    <article>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1" style="text-align: justify;text-justify: inter-word;">
+                    <p>Using opencv sometimes seems very confusing for starters, how to apply any transformation or function on image and what will be the output, these all terms seems pretty ambitious.<br>
+                    So I have thought to make one closed platform where you can see functions on the fly.
+                    <br>
+                    
+                    <h3>How to use it</h3>
+                    Just download the code from this <a style="color:#337ab7;text-decoration: blink;" href="https://github.com/amitkumarx86/project_python/tree/master/ImageProcessor">link</a> and run on your linux/unix system as script.
+                    <i>eg. ./ImageProcessor.py</i>
+                    
+                    <h3>Screen Shots</h3>
+                    <h4>Program Starts: (We have selected one image using "open" button in bottom left.</h4>
+                    <img src="img/imageProcessor/Image_start.png">
+                    <h4>Gray Option:</h4>
+                    <img src="img/imageProcessor/Image_gray.png">
+                    <h4>Otsu Binarization</h4>
+                    <img src="img/imageProcessor/ImageProcessor_Otsu_binarization.png">
+                    <h4>Hough Probabilistic Line Detection</h4>
+                    <img src="img/imageProcessor/ImageProcessor_Hough_P_Line_Detection.png">
+                    
+
+                    <p>
+                        There are many more such options, I will leave you to explore them.<br>
+                        ...Thank for Reading :)
+                    </p>   
+     
+                   
             </div>
         </div>
-    </div>
+    </article>
 
     <hr>
 
     <!-- Footer -->
+     
     <footer>
         <div class="container">
         <div class="row">
@@ -182,9 +150,11 @@
                         </a>
                     </li>
                 </ul>
-                <p class="copyright text-muted">Copyright &copy; Your Website 2017</p>
+                <p class="copyright text-muted">Copyright &copy; Your Website 2016</p>
             </div>
         </div>
+    </div>
+
     </footer>
 
     <!-- jQuery -->
@@ -199,6 +169,10 @@
 
     <!-- Theme JavaScript -->
     <script src="js/clean-blog.min.js"></script>
+    
+    <script src="js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+     
 
 </body>
 
